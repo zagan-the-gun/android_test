@@ -1,15 +1,18 @@
 Mogura mog0 = new Mogura(100,100);
 Mogura mog1 = new Mogura(300,300);
-TitleView startMenu = new TitleView("Start", width/2, height/2, 150, 40, 18);
-TitleView optionMenu = new TitleView("Option", width/2, height/2 + 80, 150, 40, 18);
-TitleView quitMenu = new TitleView("Quit", width/2, height/2 + 160, 150, 40, 18);
+TitleView startButton = new TitleView("Start", width/2, height/2, 150, 40, 18);
+TitleView optionButton = new TitleView("Option", width/2, height/2 + 80, 150, 40, 18);
+TitleView quitButton = new TitleView("Quit", width/2, height/2 + 160, 150, 40, 18);
+OptionView argumentSlide = new OptionView(150, 40, 28);
 
 int gameFlag = 0;
-int menuSelect = 1;
 int score = 0;
 
 void setup() {
-  size(400, 600, P2D);
+  //frameRate(100);
+  //size(400, 600, JAVA2D);
+  //size(400, 600, P2D);
+  size(400, 600, FX2D);
   //size(400, 600);
   //size(1280, 720);
   //size(720, 1280);
@@ -19,26 +22,30 @@ void setup() {
   background(255);
   //frameRate(1);
 
-  startMenu.setCoordinate(width/2, height/2);
-  startMenu.setFillColor(255, 255, 255, 255);
-  startMenu.setStrokeColor(0, 0, 0, 255);
-  startMenu.setFontColor(0, 0, 0, 255);
+  startButton.setCoordinate(width/2, height/2);
+  startButton.setFillColor(255, 255, 255, 255);
+  startButton.setStrokeColor(0, 0, 0, 255);
+  startButton.setFontColor(0, 0, 0, 255);
 
-  optionMenu.setCoordinate(width/2, height/2 + 80);
-  optionMenu.setFillColor(255, 255, 255, 255);
-  optionMenu.setStrokeColor(0, 0, 0, 255);
-  optionMenu.setFontColor(0, 0, 0, 255);
+  optionButton.setCoordinate(width/2, height/2 + 80);
+  optionButton.setFillColor(255, 255, 255, 255);
+  optionButton.setStrokeColor(0, 0, 0, 255);
+  optionButton.setFontColor(0, 0, 0, 255);
 
-  quitMenu.setCoordinate(width/2, height/2 + 160);
-  quitMenu.setFillColor(255, 255, 255, 255);
-  quitMenu.setStrokeColor(0, 0, 0, 255);
-  quitMenu.setFontColor(0, 0, 0, 255);
+  quitButton.setCoordinate(width/2, height/2 + 160);
+  quitButton.setFillColor(255, 255, 255, 255);
+  quitButton.setStrokeColor(0, 0, 0, 255);
+  quitButton.setFontColor(0, 0, 0, 255);
 
   mog0.setFillColor(0, 0, 0, 255);
   mog0.setStrokeColor(0, 0, 0, 255);
   mog1.setFillColor(0, 0, 0, 255);
   mog1.setStrokeColor(0, 0, 0, 255);
 
+  argumentSlide.setCoordinate(width/2, height/2);
+  argumentSlide.setFillColor(255, 255, 255, 255);
+  argumentSlide.setStrokeColor(0, 0, 0, 255);
+  argumentSlide.setFontColor(0, 0, 0, 255);
 }
 
 void draw() {
@@ -68,9 +75,12 @@ void draw() {
     strokeWeight(1);
     line(0, 0, width, height);
     line(0, height, width, 0);
-    startMenu.menu_draw();
-    optionMenu.menu_draw();
-    quitMenu.menu_draw();
+    startButton.menu_draw();
+    optionButton.menu_draw();
+    quitButton.menu_draw();
+
+  } else if(gameFlag == 2) {
+    argumentSlide.optionDraw();
   }
   delay(50);
 }
@@ -78,16 +88,21 @@ void draw() {
 void mousePressed(){
 
   if(gameFlag == 0){
-    if(startMenu.hit_check(mouseX, mouseY)) {
-      menuSelect = 1;
+    if(startButton.hit_check(mouseX, mouseY)) {
       gameFlag = 1;
-    } else if(optionMenu.hit_check(mouseX, mouseY)){
-      menuSelect = 2;
-    } else if(quitMenu.hit_check(mouseX, mouseY)){
+    } else if(optionButton.hit_check(mouseX, mouseY)){
+      gameFlag = 2;
+    } else if(quitButton.hit_check(mouseX, mouseY)){
       exit();
     }
   } else if(gameFlag == 1) {
     mog0.hit_check(mouseX, mouseY);
     mog1.hit_check(mouseX, mouseY);
+  }
+}
+
+void mouseDragged(){
+  if(gameFlag == 2){
+    argumentSlide.drugGaugePos(mouseX, mouseY);
   }
 }

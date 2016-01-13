@@ -1,4 +1,4 @@
-class TitleView{
+class OptionView{
   float px = 0;
   float py = 0;
 
@@ -23,24 +23,23 @@ class TitleView{
   int textWidthSize = 200;
   int textHeightSize = 40;
 
-  int strokeWeightSize = 8;
-
-  int menuTextFontSize = 16;
+  int optionTextFontSize = 28;
   String buttonText = "no text";
 
-  TitleView(String text, float x, float y, int widthSize, int heightSize, int fontSize){
-    this.px = x;
-    this.py = y;
-    this.buttonText = text;
+  int gaugeValue = '5';
+  float gaugePos;
+
+  OptionView(int widthSize, int heightSize, int fontSize){
     this.textWidthSize = widthSize;
     this.textHeightSize = heightSize;
-    this.menuTextFontSize = fontSize;
+    this.optionTextFontSize = fontSize;
     //menu_draw();
   }
 
-  void setCoordinate(float x, float y){
-    this.px = x;
-    this.py = y;
+  void setCoordinate(float _px, float _py){
+    this.px = _px;
+    this.py = _py;
+    this.gaugePos = _px;
   }
 
   void setFillColor(float r, float g, float b, float a){
@@ -64,27 +63,30 @@ class TitleView{
     this.fontA = a;
   }
 
-  void menu_draw(){
-    //println("DEBUG DEBUG DEBUG ");
+  void optionDraw(){
+    //println("DEBUG DEBUG DEBUG");
 
     rectMode(CENTER);
     textAlign(CENTER, CENTER);
     colorMode(RGB,255);
-
-    strokeWeight(this.strokeWeightSize);
-    //strokeWeight(20);
     strokeJoin(ROUND);
-    //strokeJoin(MITER);
-    //strokeJoin(BEVEL);
 
+    strokeWeight(3);
+    line(int(px) - 100, int(py), int(px) + 100, int(py));
+
+    strokeWeight(2);
+    for(int i = int(px) - 90; i <= int(px) + 100; i = i + 30){
+      line(i, py - 8, i, py + 8);
+    }
+
+    strokeWeight(8);
     stroke(strokeR, strokeG, strokeB, strokeA);
     fill(fillR, fillG, fillB, fillA);
-    rect(px, py, textWidthSize, textHeightSize);
+    rect(gaugePos, py, 20, 40);
 
     fill(fontR, fontG, fontB, fontA);
-    textSize(menuTextFontSize);
-    text(buttonText, px, py, textWidthSize, textHeightSize);
-
+    textSize(optionTextFontSize);
+    text(gaugeValue, px, py - 50);
   }
 
   boolean hit_check(float x, float y){
@@ -94,5 +96,20 @@ class TitleView{
       }
     }
     return false;
+  }
+
+  void drugGaugePos(float _x, float _y){
+    if(_y < (py + 40) && _y > (py - 40)){
+
+      if(_x < px - float(100)){
+        this.gaugePos = px - 100;
+      } else if(_x > px + float(100)){
+        this.gaugePos = px + 100;
+      } else {
+        this.gaugePos = _x;
+      }
+      this.gaugeValue = int((gaugePos - (px - 100))/20);
+      //println("DEBUG DEBUG DEBUG gaugeValue: " + gaugeValue);
+    }
   }
 }

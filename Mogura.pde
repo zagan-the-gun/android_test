@@ -46,7 +46,7 @@ class Mogura{
   void ellipse_draw(){
 
     strokeWeight(this.strokeWeightSize);
-    
+
     if(type == 0) {
      noFill();
      stroke(0);
@@ -55,7 +55,6 @@ class Mogura{
      fill(0);
     }
 
-    
     ////imageMode(CENTER);
     //int tmp_strokeSize;
 
