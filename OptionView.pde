@@ -27,19 +27,23 @@ class OptionView{
   String buttonText = "no text";
 
   int gaugeValue = '5';
-  float gaugePos;
+  float gaugePos = '5';
 
   OptionView(int widthSize, int heightSize, int fontSize){
     this.textWidthSize = widthSize;
     this.textHeightSize = heightSize;
     this.optionTextFontSize = fontSize;
-    //menu_draw();
   }
 
   void setCoordinate(float _px, float _py){
     this.px = _px;
     this.py = _py;
-    this.gaugePos = _px;
+    this.gaugePos = (mogura * 20) + (px - 100);
+    this.gaugeValue = mogura;
+    println("DEBUG DEBUG DEBUG gaugePos : " + this.gaugePos);
+    println("DEBUG DEBUG DEBUG gaugeValue : " + this.gaugeValue);
+    println("DEBUG DEBUG DEBUG mogura : " + mogura);
+
   }
 
   void setFillColor(float r, float g, float b, float a){
@@ -111,5 +115,23 @@ class OptionView{
       this.gaugeValue = int((gaugePos - (px - 100))/20);
       //println("DEBUG DEBUG DEBUG gaugeValue: " + gaugeValue);
     }
+  }
+
+  void setHiscoreConfig(int _hiscore){
+    JSONObject hiscore = new JSONObject();
+    hiscore.setString("name", "zagan");
+    hiscore.setInt("hiscore", _hiscore);
+    saveJSONObject(hiscore,"hisocre.json");
+  }
+
+  void setConfig(){
+    JSONObject gameConfig = new JSONObject();
+    gameConfig.setInt("mogura", this.gaugeValue);
+    saveJSONObject(gameConfig,"config.json");
+  }
+
+  int getConfig(){
+    JSONObject gameConfig = loadJSONObject("config.json");
+    return gameConfig.getInt("mogura");
   }
 }

@@ -4,9 +4,13 @@ TitleView startButton = new TitleView("Start", width/2, height/2, 150, 40, 18);
 TitleView optionButton = new TitleView("Option", width/2, height/2 + 80, 150, 40, 18);
 TitleView quitButton = new TitleView("Quit", width/2, height/2 + 160, 150, 40, 18);
 OptionView argumentSlide = new OptionView(150, 40, 28);
+TitleView optionOkButton = new TitleView("Ok", width/2, height/2, 80, 40, 18);
+TitleView optionCancelButton = new TitleView("Cancel", width/2, height/2, 80, 40, 18);
+
 
 int gameFlag = 0;
 int score = 0;
+int mogura;
 
 void setup() {
   //frameRate(100);
@@ -42,10 +46,22 @@ void setup() {
   mog1.setFillColor(0, 0, 0, 255);
   mog1.setStrokeColor(0, 0, 0, 255);
 
+  mogura = argumentSlide.getConfig();
   argumentSlide.setCoordinate(width/2, height/2);
   argumentSlide.setFillColor(255, 255, 255, 255);
   argumentSlide.setStrokeColor(0, 0, 0, 255);
   argumentSlide.setFontColor(0, 0, 0, 255);
+
+  optionOkButton.setCoordinate(width - 150, height - 50);
+  optionOkButton.setFillColor(255, 255, 255, 255);
+  optionOkButton.setStrokeColor(0, 0, 0, 255);
+  optionOkButton.setFontColor(0, 0, 0, 255);
+
+  optionCancelButton.setCoordinate(width - 50, height - 50);
+  optionCancelButton.setFillColor(255, 255, 255, 255);
+  optionCancelButton.setStrokeColor(0, 0, 0, 255);
+  optionCancelButton.setFontColor(0, 0, 0, 255);
+
 }
 
 void draw() {
@@ -81,6 +97,8 @@ void draw() {
 
   } else if(gameFlag == 2) {
     argumentSlide.optionDraw();
+    optionOkButton.menu_draw();
+    optionCancelButton.menu_draw();
   }
   delay(50);
 }
@@ -98,6 +116,14 @@ void mousePressed(){
   } else if(gameFlag == 1) {
     mog0.hit_check(mouseX, mouseY);
     mog1.hit_check(mouseX, mouseY);
+
+  } else if(gameFlag == 2) {
+    if(optionOkButton.hit_check(mouseX, mouseY)) {
+      argumentSlide.setConfig();
+      gameFlag = 0;
+    } else if(optionCancelButton.hit_check(mouseX, mouseY)){
+      gameFlag = 0;
+    }
   }
 }
 
