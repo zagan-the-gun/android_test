@@ -11,6 +11,7 @@ TitleView optionCancelButton = new TitleView("Cancel", width/2, height/2, 80, 40
 int gameFlag = 0;
 int score = 0;
 int mogura;
+int damage = 0;
 
 void setup() {
   //frameRate(100);
@@ -43,6 +44,7 @@ void setup() {
 
   mog0.setFillColor(0, 0, 0, 255);
   mog0.setStrokeColor(0, 0, 0, 255);
+
   mog1.setFillColor(0, 0, 0, 255);
   mog1.setStrokeColor(0, 0, 0, 255);
 
@@ -86,6 +88,24 @@ void draw() {
       mog1.setStatus(1);
     }
 
+  if(damage > 5){
+    // damage effect
+    loadPixels();
+  
+    stroke(0, 255, 255, 0);
+    strokeWeight(1);
+    line(0, 0, width, height);
+    line(0, height, width, 0);
+    ////mozaic
+    for(int j = 0; j < height; j+=(damage+10)) {  
+      for(int i = 0; i < width; i+=(damage+10)) {  
+        color c = pixels[j * width + i];
+        fill(c);
+        rect(i, j, (damage+5), (damage+5));
+      }
+    }
+  }
+
   } else if(gameFlag == 0) {
     stroke(0, 0, 0, 255);
     strokeWeight(1);
@@ -100,6 +120,7 @@ void draw() {
     optionOkButton.menu_draw();
     optionCancelButton.menu_draw();
   }
+
   delay(50);
 }
 
@@ -131,4 +152,15 @@ void mouseDragged(){
   if(gameFlag == 2){
     argumentSlide.drugGaugePos(mouseX, mouseY);
   }
+}
+
+void displayImage(PImage pict) {
+  int alp = 80;
+
+  tint(255, 0, 0, alp);
+  image(pict, random(-10, 10), 0);
+  tint(0, 255, 0, alp);
+  image(pict, random(-10, 10), 0);
+  tint(0, 0, 255, alp);
+  image(pict, random(-10, 10), 0);
 }

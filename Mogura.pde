@@ -77,6 +77,10 @@ class Mogura{
       this.strokeSize--;
     } else {
       this.status = 0;
+      damage++;
+      if(damage > 10){
+        exit();
+      }
     }
   }
 

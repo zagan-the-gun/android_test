@@ -26,8 +26,8 @@ class OptionView{
   int optionTextFontSize = 28;
   String buttonText = "no text";
 
-  int gaugeValue = '5';
-  float gaugePos = '5';
+  int gaugeValue;
+  float gaugePos;
 
   OptionView(int widthSize, int heightSize, int fontSize){
     this.textWidthSize = widthSize;
