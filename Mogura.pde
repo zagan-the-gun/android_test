@@ -79,7 +79,15 @@ class Mogura{
       this.status = 0;
       damage++;
       if(damage > 10){
-        exit();
+        if(score > hiScore){
+          JSONObject gameHiscore = new JSONObject();
+          gameHiscore.setInt("hiscore", int(score));
+          saveJSONObject(gameHiscore,"hisocre.json");
+          hiScore = score;
+        }
+        hiScore = score;
+        gameFlag = 3;
+      //exit();
       }
     }
   }
@@ -89,7 +97,8 @@ class Mogura{
       if(y < (this.py + this.strokeSize/2) && y > (this.py - this.strokeSize/2)){
         this.status = 0;
         this.strokeSize = 0;
-        score++;
+        //score++;
+        score += mogura * mogura;
         println("score: " + score);
       }
     }
@@ -111,4 +120,5 @@ class Mogura{
     this.type = _type;
     println("type: " + type);
   }
+
 }

@@ -117,17 +117,12 @@ class OptionView{
     }
   }
 
-  void setHiscoreConfig(int _hiscore){
-    JSONObject hiscore = new JSONObject();
-    hiscore.setString("name", "zagan");
-    hiscore.setInt("hiscore", _hiscore);
-    saveJSONObject(hiscore,"hisocre.json");
-  }
-
   void setConfig(){
     JSONObject gameConfig = new JSONObject();
     gameConfig.setInt("mogura", this.gaugeValue);
     saveJSONObject(gameConfig,"config.json");
+    mogura = this.gaugeValue;
+    setup();
   }
 
   int getConfig(){
